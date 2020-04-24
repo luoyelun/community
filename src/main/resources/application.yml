@@ -1,12 +1,18 @@
 github:
   client:
     id: eff356635bf6f6d97aba
-    secret: 2bd9d882803b9b4abc5587ebedae1e252a51c2ed
+    secret: 5582c7cfbeae0b1d08be242f1511416955235260
   redirect:
     uri: http://localhost:8081/community/callback
 spring:
   thymeleaf:
     cache: false
+  #数据库连接
+  datasource:
+    url: jdbc:h2:D:\Works\Practice\Java\Web Project\Spring boot\community\db\community
+    username: sa
+    password: 123
+    driver-class-name: org.h2.Driver
 server:
   port: 8081
   servlet:

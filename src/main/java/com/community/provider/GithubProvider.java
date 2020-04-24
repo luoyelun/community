@@ -35,12 +35,11 @@ public class GithubProvider {
 
     public GithubUser getUser(String accessToken) {
         OkHttpClient client = new OkHttpClient();
-
+//.header("Authorization", "token " + access
         Request request = new Request.Builder()
                 .url("https://api.github.com/user?access_token=" + accessToken)
                 .build();
-        try {
-            Response response = client.newCall(request).execute();
+        try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
             //json转为对象
             return JSON.parseObject(string, GithubUser.class);
