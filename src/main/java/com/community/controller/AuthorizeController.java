@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 /**
@@ -38,7 +40,7 @@ public class AuthorizeController {
     public String callback(@RequestParam("code") String code,
                            @RequestParam("state") String state,
                            HttpServletRequest request,
-                           Model model) {
+                           HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
@@ -46,6 +48,7 @@ public class AuthorizeController {
         accessTokenDTO.setState(state);
         accessTokenDTO.setRedirect_uri(redirectUri);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
+        //github登录成功，获取用户信息
         GithubUser githubUser = githubProvider.getUser(accessToken);
         if (githubUser != null) {
             User user = new User();
@@ -56,12 +59,13 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModify(user.getGmtCreate());
             mapper.insert(user);
-            //登陆成功写session和cookie
-            request.getSession().setAttribute("user", githubUser);
-            return "redirect:index";
-        } else {
-            //登录失败，重新登录
-            return "redirect:index";
-        }
+            Cookie token = new Cookie("token", user.getToken());
+            //设置cookie失效时间
+            token.setMaxAge(604800);
+            response.addCookie(token);
+
+        }  //登录失败，重新登录
+
+        return "redirect:index";
     }
 }
