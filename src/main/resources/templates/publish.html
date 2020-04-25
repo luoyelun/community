@@ -2,15 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>ACommunity</title>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <script src="js/jquery-3.5.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/community.css">
+    <title>发起</title>
+    <link rel="icon" type="image/x-icon" th:href="@{favicon.ico}">
+    <script th:src="@{js/jquery-3.5.0.min.js}"></script>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{css/community.css}">
+    <script th:src="@{js/bootstrap.min.js}"></script>
 </head>
-<body class="body-bg">
+<body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -56,7 +56,7 @@
 </nav>
 <div class="container-fluid main">
     <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 main-content">
             <h2><span class="glyphicon glyphicon-plus"></span> 发起</h2>
             <hr>
             <form th:action="@{/publish}" method="post">

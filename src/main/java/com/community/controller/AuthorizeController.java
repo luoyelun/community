@@ -57,6 +57,7 @@ public class AuthorizeController {
             //System.currentTimeMillis()获取当前毫秒数
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModify(user.getGmtCreate());
+            user.setAvatarUrl(githubUser.getAvatar_url());
             mapper.insert(user);
             Cookie token = new Cookie("token", user.getToken());
             //设置cookie失效时间

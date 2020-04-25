@@ -1,7 +1,7 @@
 github:
   client:
     id: eff356635bf6f6d97aba
-    secret: 5582c7cfbeae0b1d08be242f1511416955235260
+    secret: f41aaafe59e960101981d4f6a9d54a16f9a9d06c
   redirect:
     uri: http://localhost:8081/community/callback
 spring:
@@ -17,3 +17,6 @@ server:
   port: 8081
   servlet:
     context-path: /community
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

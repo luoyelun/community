@@ -1,10 +1,11 @@
 package com.community.dto;
 
+import lombok.Data;
+
 /**
  * @author luoyelun
  * @date 2020/4/24 0:24
  */
-
 public class AccessTokenDTO {
     private String client_id;
     private String client_secret;

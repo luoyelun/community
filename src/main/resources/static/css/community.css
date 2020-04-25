@@ -1,13 +1,33 @@
-.body-bg {
+body {
     background-color: #F6F5F0;
 }
 
 .main {
-    margin: 30px;
+    margin: 20px;
     background-color: white;
 }
 
 .btn-publish {
     width: 100px;
     margin-bottom: 20px;
+}
+
+.main-content {
+    border-right: 1px solid #e6e6e6;
+}
+
+.main-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 10%;
+}
+
+.nav-avatar {
+    margin-top: 5px;
+}
+
+.main-content-info {
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
 }

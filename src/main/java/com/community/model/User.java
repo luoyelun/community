@@ -1,10 +1,5 @@
 package com.community.model;
 
-/**
- * @author luoyelun
- * @date 2020/4/24 13:16
- */
-
 public class User {
 
     private long id;
@@ -13,6 +8,8 @@ public class User {
     private String token;
     private long gmtCreate;
     private long gmtModify;
+    private String bio;
+    private String avatarUrl;
 
 
     public long getId() {
@@ -66,6 +63,24 @@ public class User {
 
     public void setGmtModify(long gmtModify) {
         this.gmtModify = gmtModify;
+    }
+
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
 }

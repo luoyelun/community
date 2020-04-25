@@ -1,13 +1,17 @@
 package com.community.controller;
 
+import com.community.dto.QuestionDTO;
 import com.community.mapper.UserMapper;
 import com.community.model.User;
+import com.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author luoyelun
@@ -18,8 +22,11 @@ public class IndexController {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    QuestionService questionService;
+
     @GetMapping({"/", "/index", "/index.html"})
-    public String index(HttpServletRequest request) {
+    public String index(HttpServletRequest request, Model model) {
         /*
            1.获得cookies
            2.判断cookie中是否存在token
@@ -39,6 +46,9 @@ public class IndexController {
                 }
             }
         }
+
+        List<QuestionDTO> questionList = questionService.list();
+        model.addAttribute("questions", questionList);
         return "index";
     }
 }

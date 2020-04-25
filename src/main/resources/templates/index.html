@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>ACommunity</title>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <script src="js/jquery-3.5.0.min.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/community.css">
-    <script src="js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/x-icon" th:href="@{favicon.ico}">
+    <script th:src="@{js/jquery-3.5.0.min.js}"></script>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{css/community.css}">
+    <script th:src="@{js/bootstrap.min.js}"></script>
 </head>
-<body class="body-bg">
+<body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -34,8 +34,12 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <!--已登录则显示用户名和提问-->
-                <li>
+                <li th:if="${session.user!=null}">
                     <a th:href="@{/publish}">提问</a>
+                </li>
+                <li th:if="${session.user!=null}">
+                    <img class="media-object main-avatar nav-avatar"
+                         src="https://avatars0.githubusercontent.com/u/21998699?v=4" alt="avatar">
                 </li>
                 <li class="dropdown" th:if="${session.user!=null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -54,5 +58,32 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 main-content">
+            <h2><span class="glyphicon glyphicon glyphicon-list"></span> 发现</h2>
+            <hr>
+            <div class="media" th:each="question:${questions}">
+                <div class="media-left media-middle">
+                    <a href="#">
+                        <img class="media-object main-avatar"
+                             th:src="${question.user.avatarUrl}"
+                             src="https://avatars0.githubusercontent.com/u/21998699?v=4" alt="...">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <span class="main-content-info"
+                          th:text="' • '+${question.commentCount}+'个回复 • '+${question.viewCount}+'次浏览 • '+${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                </div>
+                <hr>
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>热门话题</h3>
+        </div>
+    </div>
+</div>
 </body>
 </html>
