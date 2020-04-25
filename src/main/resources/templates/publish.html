@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>ACommunity</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script src="js/jquery-3.5.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/community.css">
-    <script src="js/bootstrap.min.js"></script>
 </head>
 <body class="body-bg">
 <nav class="navbar navbar-default">
@@ -54,5 +54,42 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-plus"></span> 发起</h2>
+            <hr>
+            <form th:action="@{/publish}" method="post">
+                <div class="form-group">
+                    <label for="title">问题标题（简明扼要）：</label>
+                    <input th:value="${title}" type="text" class="form-control" name="title" id="title"
+                           placeholder="问题标题..." autocomplete="off" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">问题补充（必填，请按照右边提示）：</label>
+                    <textarea th:text="${description}" rows="15" class="form-control" name="description"
+                              id="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tags">添加标签</label>
+                    <input th:value="${tag}" class="form-control" name="tag" id="tags" placeholder="多个标签以，分隔"
+                           autocomplete="off" required>
+                </div>
+                <span th:if="${error!=null}" th:text="${error}" style="color: red"></span>
+                <button type="submit" class="btn btn-success pull-right btn-publish">发布问题</button>
+            </form>
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>问题发起指南</h3>
+            <ul>
+                <li>问题标题：请用精简的语言描述您发布的问题，不超过25个字</li>
+                <li>问题补充：详细补充您的问题内容</li>
+                <li>选择标签：填写一个或多个合适的标签，用逗号隔开，每个标签不超过10个字</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
