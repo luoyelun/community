@@ -90,7 +90,7 @@
             <li th:if="${!pageList.isIsFirstPage()}"><a th:href="@{/(page=${pageList.prePage})}">上一页</a></li>
             <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.nextPage})}">下一页</a></li>
             <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.pages})}">末页</a></li>
-            <li th:class=""><a href="#" th:text="'当前第'+${pageList.pageNum}+'页 共'+${pageList.pages}+'页'"></a></li>
+            <li><a href="#" th:text="'当前第'+${pageList.pageNum}+'页 共'+${pageList.pages}+'页'"></a></li>
         </ul>
     </nav>
 </div>
