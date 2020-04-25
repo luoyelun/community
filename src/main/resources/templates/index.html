@@ -22,7 +22,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" th:href="@{/index}">ACommunity</a>
+            <a class="navbar-brand" th:href="@{/}">ACommunity</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -35,7 +35,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <!--已登录则显示用户名和提问-->
                 <li th:if="${session.user!=null}">
-                    <a th:href="@{/publish}">提问</a>
+                    <a th:href="@{/publish}">发布 </a>
                 </li>
                 <li th:if="${session.user!=null}">
                     <img class="media-object main-avatar nav-avatar"
@@ -63,27 +63,37 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 main-content">
             <h2><span class="glyphicon glyphicon glyphicon-list"></span> 发现</h2>
             <hr>
-            <div class="media" th:each="question:${questions}">
+            <div class="media" th:each="page:${pageList.list}">
                 <div class="media-left media-middle">
                     <a href="#">
                         <img class="media-object main-avatar"
-                             th:src="${question.user.avatarUrl}"
+                             th:src="${page.user.avatarUrl}"
                              src="https://avatars0.githubusercontent.com/u/21998699?v=4" alt="...">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <h4 class="media-heading" th:text="${page.title}"></h4>
                     <span class="main-content-info"
-                          th:text="' • '+${question.commentCount}+'个回复 • '+${question.viewCount}+'次浏览 • '+${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                          th:text="' • '+${page.commentCount}+'个回复 • '+${page.viewCount}+'次浏览 • '+${#dates.format(page.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                 </div>
                 <hr>
             </div>
 
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3>热门话题</h3>
+            <h3>最新话题</h3>
         </div>
     </div>
+    <nav aria-label="...">
+        <ul class="pagination pagination-color">
+            <li th:if="${!pageList.isIsFirstPage()}"><a th:href="@{/(page=1)}">首页</a></li>
+            <li th:if="${!pageList.isIsFirstPage()}"><a th:href="@{/(page=${pageList.prePage})}">上一页</a></li>
+            <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.nextPage})}">下一页</a></li>
+            <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.pages})}">末页</a></li>
+            <li th:class=""><a href="#" th:text="'当前第'+${pageList.pageNum}+'页 共'+${pageList.pages}+'页'"></a></li>
+        </ul>
+    </nav>
 </div>
+
 </body>
 </html>
