@@ -31,7 +31,7 @@ public class PublishController {
     }
 
     @PostMapping("/publish")
-    public String doPublish(@RequestParam(value = "id", required = false) Long id,
+    public String doPublish(@RequestParam(value = "id", required = false) Integer id,
                             @RequestParam(value = "title", required = false) String title,
                             @RequestParam(value = "description", required = false) String description,
                             @RequestParam(value = "tag", required = false) String tag,
@@ -58,8 +58,8 @@ public class PublishController {
     }
 
     @GetMapping("/publish/{id}")
-    public String edit(@PathVariable("id") Long id, Model model) {
-        Question question = questionMapper.getById(id);
+    public String edit(@PathVariable("id") Integer id, Model model) {
+        Question question = questionMapper.selectByPrimaryKey(id);
         if (question != null) {
             model.addAttribute("title", question.getTitle());
             model.addAttribute("description", question.getDescription());

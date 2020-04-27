@@ -36,6 +36,6 @@
             <!--false或直接去除开启驼峰-->
             <!--            <property name="useActualColumnNames" value="false"/>-->
         </table>
-
+        <table tableName="question" domainObjectName="Question"/>
     </context>
 </generatorConfiguration>

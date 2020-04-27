@@ -4,6 +4,7 @@ import com.community.dto.QuestionDTO;
 import com.community.mapper.QuestionMapper;
 import com.community.mapper.UserMapper;
 import com.community.model.Question;
+import com.community.model.QuestionExample;
 import com.community.model.User;
 import com.community.model.UserExample;
 import com.github.pagehelper.PageHelper;
@@ -32,7 +33,7 @@ public class QuestionService {
         //分页
         PageHelper.startPage(pageNum, 10);
         //获得分页信息、相应条数的question
-        PageInfo<Question> questions = new PageInfo<>(questionMapper.list(), 5);
+        PageInfo<Question> questions = new PageInfo<>(questionMapper.selectByExample(new QuestionExample()), 5);
         PageInfo<QuestionDTO> pageInfo = new PageInfo<>();
         BeanUtils.copyProperties(questions, pageInfo);
         pageInfo.setList(new ArrayList<QuestionDTO>());
@@ -41,6 +42,7 @@ public class QuestionService {
             User user = findByAccountId(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
+
             questionDTO.setUser(user);
             pageInfo.getList().add(questionDTO);
         }
@@ -52,9 +54,11 @@ public class QuestionService {
      */
     public PageInfo<QuestionDTO> list(Integer pageNum, long id) {
         PageHelper.startPage(pageNum, 5);
-        System.out.println(id);
         //获得该用户发布的问题
-        PageInfo<Question> questions = new PageInfo<>(questionMapper.listByAccountId(id), 5);
+        QuestionExample example = new QuestionExample();
+        example.createCriteria().
+                andCreatorEqualTo(Math.toIntExact(id));
+        PageInfo<Question> questions = new PageInfo<>(questionMapper.selectByExample(example), 5);
         PageInfo<QuestionDTO> pageInfo = new PageInfo<>();
         BeanUtils.copyProperties(questions, pageInfo);
         pageInfo.setList(new ArrayList<QuestionDTO>());
@@ -73,10 +77,11 @@ public class QuestionService {
      * 通过问题的id获得question
      * 将question和user set到questionDto并返回
      */
-    public QuestionDTO getById(long id) {
-        Question question = questionMapper.getById(id);
+    public QuestionDTO getById(Integer id) {
+        Question question = questionMapper.selectByPrimaryKey(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
+
         questionDTO.setUser(findByAccountId(question.getCreator()));
         return questionDTO;
     }
@@ -84,16 +89,16 @@ public class QuestionService {
     /**
      * 更改阅读数
      */
-    public void updateViewCount(long id) {
+    public void updateViewCount(Integer id) {
         questionMapper.updateViewCount(id);
     }
 
     public void createOrUpdate(Question question) {
         if (question.getId() == null) {
-            questionMapper.create(question);
+            questionMapper.insertSelective(question);
         } else {
             question.setGmtModify(System.currentTimeMillis());
-            questionMapper.updateQuestionById(question);
+            questionMapper.updateByPrimaryKey(question);
         }
     }
 

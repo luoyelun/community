@@ -18,7 +18,7 @@ public class QuestionController {
     QuestionService questionService;
 
     @GetMapping("/question/{id}")
-    public String question(@PathVariable("id") Long id, Model model) {
+    public String question(@PathVariable("id") Integer id, Model model) {
         if (id != null) {
             questionService.updateViewCount(id);
             QuestionDTO questionDTO = questionService.getById(id);
