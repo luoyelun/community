@@ -5,6 +5,7 @@ import com.community.dto.GithubUser;
 import com.community.mapper.UserMapper;
 import com.community.model.User;
 import com.community.provider.GithubProvider;
+import com.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class AuthorizeController {
     private String redirectUri;
 
     @Autowired
-    private UserMapper mapper;
+    UserService userService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam("code") String code,
@@ -52,19 +53,25 @@ public class AuthorizeController {
             User user = new User();
             user.setToken(UUID.randomUUID().toString());
             user.setName(githubUser.getName());
-            user.setAccountId(String.valueOf(githubUser.getId()));
-            //System.currentTimeMillis()获取当前毫秒数
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModify(user.getGmtCreate());
+            user.setAccountId(githubUser.getId());
             user.setAvatarUrl(githubUser.getAvatar_url());
-            mapper.insert(user);
+            userService.createOrUpdate(user);
             Cookie token = new Cookie("token", user.getToken());
             //设置cookie失效时间
             token.setMaxAge(604800);
             response.addCookie(token);
-
         }  //登录失败，重新登录
 
-        return "redirect:/index";
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().removeAttribute("user");
+        //清除cookie
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);//立即删除
+        response.addCookie(cookie);//重新写入
+        return "redirect:/";
     }
 }

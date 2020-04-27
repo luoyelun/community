@@ -1,63 +1,19 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>ACommunity</title>
-    <link rel="icon" type="image/x-icon" th:href="@{favicon.ico}">
-    <script th:src="@{js/jquery-3.5.0.min.js}"></script>
-    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}">
-    <link rel="stylesheet" th:href="@{css/community.css}">
-    <script th:src="@{js/bootstrap.min.js}"></script>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/community.css}">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">ACommunity</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" th:href="@{/}">ACommunity</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="搜索问题">
-                </div>
-                <button type="submit" class="btn btn-default">搜索</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <!--已登录则显示用户名和提问-->
-                <li th:if="${session.user!=null}">
-                    <a th:href="@{/publish}">发布 </a>
-                </li>
-                <li th:if="${session.user!=null}">
-                    <img class="media-object main-avatar nav-avatar"
-                         src="https://avatars0.githubusercontent.com/u/21998699?v=4" alt="avatar">
-                </li>
-                <li class="dropdown" th:if="${session.user!=null}">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">[[${session.user.name}]]<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">消息中心</a></li>
-                        <li><a href="#">个人资料</a></li>
-                        <li><a href="#">退出登录</a></li>
-                    </ul>
-                </li>
-                <!--未登录显示登录按钮-->
-                <li th:if="${session.user==null}">
-                    <a href="https://github.com/login/oauth/authorize?client_id=eff356635bf6f6d97aba&redirect_uri=http://localhost:8081/community/callback&scope=user&state=1">登录</a>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+<!--导航栏-->
+<div th:replace="~{navigation::navbar}"></div>
+<!--内容列表-->
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 main-content">
@@ -67,32 +23,36 @@
                 <div class="media-left media-middle">
                     <a href="#">
                         <img class="media-object main-avatar"
-                             th:src="${page.user.avatarUrl}"
-                             src="https://avatars0.githubusercontent.com/u/21998699?v=4" alt="...">
+                             th:src="${page.user.avatarUrl}" alt="...">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${page.title}"></h4>
+                    <a th:href="@{'/question/'+${page.id}}"><h4 class="media-heading" th:text="${page.title}"></h4></a>
                     <span class="main-content-info"
                           th:text="' • '+${page.commentCount}+'个回复 • '+${page.viewCount}+'次浏览 • '+${#dates.format(page.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                 </div>
                 <hr>
             </div>
 
+            <nav aria-label="..." class="pull-right">
+                <ul class="pagination pagination-color">
+                    <li th:if="${!pageList.isIsFirstPage()}"><a th:href="@{/(page=1)}"><<</a></li>
+                    <li th:if="${!pageList.isIsFirstPage()}"><a th:href="@{/(page=${pageList.prePage})}"><</a></li>
+                    <th:block th:each="nav:${pageList.navigatepageNums}">
+                        <li th:class="${nav==pageList.pageNum}? 'active':''">
+                            <a th:href="@{/(page=${nav})}" th:text="${nav}"></a>
+                        </li>
+                    </th:block>
+                    <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.nextPage})}">></a></li>
+                    <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.pages})}">>></a></li>
+                    <!--                    <li><a href="#" th:text="'当前第'+${pageList.pageNum}+'页 共'+${pageList.pages}+'页'"></a></li>-->
+                </ul>
+            </nav>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <h3>最新话题</h3>
         </div>
     </div>
-    <nav aria-label="...">
-        <ul class="pagination pagination-color">
-            <li th:if="${!pageList.isIsFirstPage()}"><a th:href="@{/(page=1)}">首页</a></li>
-            <li th:if="${!pageList.isIsFirstPage()}"><a th:href="@{/(page=${pageList.prePage})}">上一页</a></li>
-            <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.nextPage})}">下一页</a></li>
-            <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.pages})}">末页</a></li>
-            <li><a href="#" th:text="'当前第'+${pageList.pageNum}+'页 共'+${pageList.pages}+'页'"></a></li>
-        </ul>
-    </nav>
 </div>
 
 </body>

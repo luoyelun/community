@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${question.title}">title</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    <script th:src="@{/js/jquery-3.5.0.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/community.css}">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<!--导航栏-->
+<div th:replace="~{navigation::navbar}"></div>
+<!--内容列表-->
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 main-content">
+            <div class="section">
+                <h4><span class="" th:text="${question.title}"></span></h4>
+                <span class="main-content-info">
+                    作者：<span th:text="${question.user.name}"></span>|
+                    发布时间：<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>|
+                    阅读量：<span th:text="${question.viewCount}"></span> |
+                    <a th:href="@{'/publish/'+${question.id}}"
+                       th:if="${session.user!=null&&session.user.accountId==question.creator}"><span
+                            class="glyphicon glyphicon-pencil label label-primary">编辑问题</span></a>
+                </span>
+                <hr>
+                <div th:text="${question.description}">
+
+                </div>
+            </div>
+            <hr>
+            <div class="">
+                [[${question.tag}]]
+            </div>
+            <hr>
+            <div>
+                <form action="">
+                    <div class="form-group">
+                        <textarea rows="6" class="form-control" name="description"
+                                  id="description" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success pull-right btn-publish">回复</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 section">
+            <h4>发起人</h4>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object main-avatar" th:src="${question.user.avatarUrl}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h5 class="media-heading">
+                        <span th:text="${question.user.name}"></span>
+                    </h5>
+                </div>
+            </div>
+            <hr>
+            <div class="media">
+                <h4>相关问题</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html> 

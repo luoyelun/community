@@ -3,23 +3,23 @@ package com.community.model;
 
 public class Question {
 
-    private long id;
+    private Long id;
     private String title;
     private String description;
-    private long gmtCreate;
-    private long gmtModify;
-    private long creator;
-    private long commentCount;
-    private long viewCount;
-    private long likeCount;
+    private Long gmtCreate;
+    private Long gmtModify;
+    private Long creator;
+    private Long commentCount;
+    private Long viewCount;
+    private Long likeCount;
     private String tag;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -42,56 +42,56 @@ public class Question {
     }
 
 
-    public long getGmtCreate() {
+    public Long getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(long gmtCreate) {
+    public void setGmtCreate(Long gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
 
-    public long getGmtModify() {
+    public Long getGmtModify() {
         return gmtModify;
     }
 
-    public void setGmtModify(long gmtModify) {
+    public void setGmtModify(Long gmtModify) {
         this.gmtModify = gmtModify;
     }
 
 
-    public long getCreator() {
+    public Long getCreator() {
         return creator;
     }
 
-    public void setCreator(long creator) {
+    public void setCreator(Long creator) {
         this.creator = creator;
     }
 
 
-    public long getCommentCount() {
+    public Long getCommentCount() {
         return commentCount;
     }
 
-    public void setCommentCount(long commentCount) {
+    public void setCommentCount(Long commentCount) {
         this.commentCount = commentCount;
     }
 
 
-    public long getViewCount() {
+    public Long getViewCount() {
         return viewCount;
     }
 
-    public void setViewCount(long viewCount) {
+    public void setViewCount(Long viewCount) {
         this.viewCount = viewCount;
     }
 
 
-    public long getLikeCount() {
+    public Long getLikeCount() {
         return likeCount;
     }
 
-    public void setLikeCount(long likeCount) {
+    public void setLikeCount(Long likeCount) {
         this.likeCount = likeCount;
     }
 

@@ -2,30 +2,30 @@ package com.community.model;
 
 public class User {
 
-    private long id;
-    private String accountId;
+    private Long id;
+    private Long accountId;
     private String name;
     private String token;
-    private long gmtCreate;
-    private long gmtModify;
+    private Long gmtCreate;
+    private Long gmtModify;
     private String bio;
     private String avatarUrl;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
 
-    public String getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
+    public void setAccountId(Long accountId) {
         this.accountId = accountId;
     }
 
@@ -48,20 +48,20 @@ public class User {
     }
 
 
-    public long getGmtCreate() {
+    public Long getGmtCreate() {
         return gmtCreate;
     }
 
-    public void setGmtCreate(long gmtCreate) {
+    public void setGmtCreate(Long gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
 
 
-    public long getGmtModify() {
+    public Long getGmtModify() {
         return gmtModify;
     }
 
-    public void setGmtModify(long gmtModify) {
+    public void setGmtModify(Long gmtModify) {
         this.gmtModify = gmtModify;
     }
 

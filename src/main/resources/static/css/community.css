@@ -35,3 +35,12 @@ body {
 .pagination-color li a {
     color: #0f0f0f;
 }
+
+.profile .section {
+    margin-top: 20px;
+}
+
+.community-menu {
+    color: #999;
+    font-size: 12px;
+}

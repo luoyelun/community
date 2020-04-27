@@ -1,7 +1,7 @@
 github:
   client:
     id: eff356635bf6f6d97aba
-    secret: f41aaafe59e960101981d4f6a9d54a16f9a9d06c
+    secret: 9e3e551bfc609c68d0a2314ef6dd6b1e8907c495
   redirect:
     uri: http://localhost:8081/community/callback
 spring:
