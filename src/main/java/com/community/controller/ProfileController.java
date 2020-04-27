@@ -28,7 +28,7 @@ public class ProfileController {
                           HttpServletRequest request,
                           @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
         User user = (User) request.getSession().getAttribute("user");
-        PageInfo<QuestionDTO> pageList = questionService.list(pageNum, user.getId());
+        PageInfo<QuestionDTO> pageList = questionService.list(pageNum, user.getAccountId());
         if (action == null || "questions".equals(action)) {
             model.addAttribute("section", "我的提问");
             model.addAttribute("pageList", pageList);

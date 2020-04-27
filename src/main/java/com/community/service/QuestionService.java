@@ -5,6 +5,7 @@ import com.community.mapper.QuestionMapper;
 import com.community.mapper.UserMapper;
 import com.community.model.Question;
 import com.community.model.User;
+import com.community.model.UserExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
@@ -37,7 +38,7 @@ public class QuestionService {
         pageInfo.setList(new ArrayList<QuestionDTO>());
         for (Question question : questions.getList()) {
             //查找问题创建者用户信息
-            User user = userMapper.findByAccountId(question.getCreator());
+            User user = findByAccountId(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
@@ -59,7 +60,7 @@ public class QuestionService {
         pageInfo.setList(new ArrayList<QuestionDTO>());
         for (Question question : questions.getList()) {
             //查找问题创建者用户信息
-            User user = userMapper.findByAccountId(question.getCreator());
+            User user = findByAccountId(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
@@ -76,7 +77,7 @@ public class QuestionService {
         Question question = questionMapper.getById(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
-        questionDTO.setUser(userMapper.findByAccountId(question.getCreator()));
+        questionDTO.setUser(findByAccountId(question.getCreator()));
         return questionDTO;
     }
 
@@ -94,5 +95,13 @@ public class QuestionService {
             question.setGmtModify(System.currentTimeMillis());
             questionMapper.updateQuestionById(question);
         }
+    }
+
+    //查找user通过创建者ID
+    public User findByAccountId(Long creator) {
+        UserExample example = new UserExample();
+        example.createCriteria()
+                .andAccountIdEqualTo(creator);
+        return userMapper.selectByExample(example).get(0);
     }
 }

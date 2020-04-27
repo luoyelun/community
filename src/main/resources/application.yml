@@ -1,7 +1,7 @@
 github:
   client:
     id: eff356635bf6f6d97aba
-    secret: 9e3e551bfc609c68d0a2314ef6dd6b1e8907c495
+    secret: 49cdadb9bca561c9bf315976579f722a319de898
   redirect:
     uri: http://localhost:8081/community/callback
 spring:
@@ -20,6 +20,9 @@ server:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.community.model
+  mapper-locations: classpath:mapper/*.xml
 pagehelper:
   helper-dialect: h2 #数据库方言
   reasonable: true #分页合理化
