@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface QuestionExtMapper {
     void updateViewCount(Integer id);
+
+    void updateCommentCount(Question record);
 }

@@ -62,7 +62,7 @@ public class QuestionService {
         //获得该用户发布的问题
         QuestionExample example = new QuestionExample();
         example.createCriteria().
-                andCreatorEqualTo(Math.toIntExact(id));
+                andCreatorEqualTo(id);
         PageInfo<Question> questions = new PageInfo<>(questionMapper.selectByExample(example), 5);
         PageInfo<QuestionDTO> pageInfo = new PageInfo<>();
         BeanUtils.copyProperties(questions, pageInfo);

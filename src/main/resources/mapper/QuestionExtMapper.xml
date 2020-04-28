@@ -6,4 +6,9 @@
         set VIEW_COUNT = VIEW_COUNT + 1
         where ID = #{id};
     </update>
+    <update id="updateCommentCount" parameterType="com.community.model.Question">
+        update question
+        set COMMENT_COUNT=COMMENT_COUNT + 1
+        where ID = #{id};
+    </update>
 </mapper>
