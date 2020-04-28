@@ -441,9 +441,4 @@
         TAG = #{tag,jdbcType=VARCHAR}
         where ID = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateViewCount">
-        update QUESTION
-        set VIEW_COUNT=VIEW_COUNT + 1
-        where id = #{id}
-    </update>
 </mapper>

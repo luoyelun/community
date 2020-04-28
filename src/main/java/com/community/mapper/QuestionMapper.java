@@ -122,5 +122,4 @@ public interface QuestionMapper {
      */
     int updateByPrimaryKey(Question record);
 
-    void updateViewCount(Integer id);
 }
