@@ -3,6 +3,7 @@ package com.community.service;
 import com.community.Exception.CustomizeErrorCode;
 import com.community.Exception.CustomizeException;
 import com.community.dto.QuestionDTO;
+import com.community.mapper.QuestionExtMapper;
 import com.community.mapper.QuestionMapper;
 import com.community.mapper.UserMapper;
 import com.community.model.Question;
@@ -27,6 +28,8 @@ public class QuestionService {
     private UserMapper userMapper;
     @Autowired
     private QuestionMapper questionMapper;
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     /**
      * 首页问题列表
@@ -95,13 +98,7 @@ public class QuestionService {
      * 更改阅读数
      */
     public void updateViewCount(Integer id) {
-        Question question = questionMapper.selectByPrimaryKey(id);
-        Question updateQuestion = new Question();
-        updateQuestion.setViewCount(question.getViewCount() + 1);
-        QuestionExample example = new QuestionExample();
-        example.createCriteria()
-                .andIdEqualTo(id);
-        questionMapper.updateByExampleSelective(updateQuestion, example);
+        questionExtMapper.updateViewCount(id);
     }
 
     /**
