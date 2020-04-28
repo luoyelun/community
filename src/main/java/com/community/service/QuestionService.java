@@ -1,5 +1,7 @@
 package com.community.service;
 
+import com.community.Exception.CustomizeErrorCode;
+import com.community.Exception.CustomizeException;
 import com.community.dto.QuestionDTO;
 import com.community.mapper.QuestionMapper;
 import com.community.mapper.UserMapper;
@@ -79,6 +81,9 @@ public class QuestionService {
      */
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectByPrimaryKey(id);
+        if (question == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
 
@@ -93,16 +98,24 @@ public class QuestionService {
         questionMapper.updateViewCount(id);
     }
 
+    /**
+     * 插入或更新question
+     */
     public void createOrUpdate(Question question) {
         if (question.getId() == null) {
             questionMapper.insertSelective(question);
         } else {
             question.setGmtModify(System.currentTimeMillis());
-            questionMapper.updateByPrimaryKey(question);
+            int updated = questionMapper.updateByPrimaryKey(question);
+            if (updated == 0) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
     }
 
-    //查找user通过创建者ID
+    /**
+     * 查找user通过创建者ID
+     */
     public User findByAccountId(Long creator) {
         UserExample example = new UserExample();
         example.createCriteria()

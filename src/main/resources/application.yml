@@ -6,6 +6,7 @@ github:
     uri: http://localhost:8081/community/callback
 spring:
   thymeleaf:
+    #thymeleaf关闭缓存
     cache: false
   #数据库连接
   datasource:
@@ -20,7 +21,7 @@ server:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.community.model
   mapper-locations: classpath:mapper/*.xml
 pagehelper:
