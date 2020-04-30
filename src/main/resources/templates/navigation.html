@@ -29,6 +29,10 @@
                     <a th:href="@{/publish}">提问 </a>
                 </li>
                 <li th:if="${session.user!=null}">
+                    <a th:href="@{/profile/replies}">通知 <span class="badge"
+                                                              th:text="${session.unreadMessage}"></span></a>
+                </li>
+                <li th:if="${session.user!=null}">
                     <img class="media-object main-avatar nav-avatar"
                          th:src="${session.user.avatarUrl}" alt="avatar">
                 </li>

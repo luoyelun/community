@@ -1,36 +1,21 @@
 package com.community.dto;
 
+import com.community.model.Comment;
+import com.community.model.User;
+
 /**
  * @author luoyelun
- * @date 2020/4/28 14:59
+ * @date 2020/4/29 10:57
  */
 
-public class CommentDTO {
-    private Integer parentId;
-    private String content;
-    private Integer type;
+public class CommentDTO extends Comment {
+    private User user;
 
-    public Integer getParentId() {
-        return parentId;
+    public User getUser() {
+        return user;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

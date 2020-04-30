@@ -1,9 +1,11 @@
 package com.community.controller;
 
+import com.community.cache.TagCache;
 import com.community.mapper.QuestionMapper;
 import com.community.model.Question;
 import com.community.model.User;
 import com.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +28,8 @@ public class PublishController {
     QuestionService questionService;
 
     @GetMapping("/publish")
-    public String publish() {
+    public String publish(Model model) {
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 
@@ -45,9 +48,15 @@ public class PublishController {
         model.addAttribute("title", question.getTitle());
         model.addAttribute("description", question.getDescription());
         model.addAttribute("tag", question.getTag());
-
-        if (question.getTitle() == null || question.getDescription() == null || question.getTag() == null) {
+        model.addAttribute("tags", TagCache.get());
+        if (StringUtils.isBlank(question.getTitle()) || StringUtils.isBlank(question.getDescription()) || StringUtils.isBlank(question.getTag())) {
             model.addAttribute("error", "输入内容不完全");
+
+            return "publish";
+        }
+        String invalid = TagCache.filterInvalid(tag);
+        if (StringUtils.isNotBlank(invalid)) {
+            model.addAttribute("error", "输入非法标签:" + invalid);
             return "publish";
         }
         question.setCreator(user.getAccountId());
@@ -65,6 +74,7 @@ public class PublishController {
             model.addAttribute("description", question.getDescription());
             model.addAttribute("tag", question.getTag());
             model.addAttribute("id", question.getId());
+            model.addAttribute("tags", TagCache.get());
         }
         return "publish";
     }

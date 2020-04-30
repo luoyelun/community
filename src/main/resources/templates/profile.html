@@ -19,7 +19,7 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 main-content">
             <h2 th:text="${section}"></h2>
             <hr>
-            <th:block th:if="${pageList.pageNum!=0}">
+            <th:block th:if="${pageList!=null and section.equals('我的提问')}">
                 <div class="media" th:each="page:${pageList.list}">
                     <div class="media-left media-middle">
                         <a href="#">
@@ -33,12 +33,62 @@
                         </a>
                         <span class="main-content-info"
                               th:text="' • '+${page.commentCount}+'个回复 • '+${page.viewCount}+'次浏览 • '+${#dates.format(page.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                        <a th:href="@{'/publish/'+${page.id}}"><span
+                                class="glyphicon glyphicon-pencil label label-primary">编辑问题</span></a>
+                        <a th:href="@{'/delete/'+${page.id}}"><span
+                                class="glyphicon glyphicon-pencil label label-danger"
+                                onclick="return confirm('确认删除这个问题？')">删除问题</span></a>
                     </div>
                     <hr>
                 </div>
 
                 <nav aria-label="..." class="pull-right">
+                    <ul class="pagination pagination-color">
+                        <li th:if="${!pageList.isIsFirstPage()}">
+                            <a th:href="@{/profile/questions(page=1)}">
+                                <<
+                            </a>
+                        </li>
+                        <li th:if="${!pageList.isIsFirstPage()}">
+                            <a th:href="@{/profile/questions(page=${pageList.prePage})}">
+                                <
+                            </a>
+                        </li>
+                        <th:block th:each="nav:${pageList.navigatepageNums}">
+                            <li th:class="${nav==pageList.pageNum}? 'active':''">
+                                <a th:href="@{/profile/questions(page=${nav})}" th:text="${nav}"></a>
+                            </li>
+                        </th:block>
+                        <li th:if="${!pageList.isIsLastPage()}">
+                            <a
+                                    th:href="@{/profile/questions(page=${pageList.nextPage})}">
+                                >
+                            </a>
+                        </li>
+                        <li th:if="${!pageList.isIsLastPage()}">
+                            <a th:href="@{/profile/questions(page=${pageList.pages})}">
+                                >>
+                            </a>
+                        </li>
+                        <!--<li><a href="#" th:text="'当前第'+${pageList.pageNum}+'页 共'+${pageList.pages}+'页'"></a></li>-->
+                    </ul>
+                </nav>
+            </th:block>
+            <th:block th:if="${pageList!=null and section.equals('最新回复')}">
+                <div class="media" th:each="notification:${pageList.list}">
+                    <div class="media-body">
+                        <p class="media-heading">
+                            <span th:text="${notification.notifierName +' ' + notification.typeName + ' '}"></span>
+                            <a th:href="@{'/notification/'+ ${notification.id}}"
+                               th:text="${notification.outerTitle}">
+                            </a>
+                            <span class="label label-danger" th:if="${notification.status == 0}">未读</span>
+                        </p>
+                    </div>
+                    <hr>
+                </div>
 
+                <nav aria-label="..." class="pull-right">
                     <ul class="pagination pagination-color">
                         <li th:if="${!pageList.isIsFirstPage()}">
                             <a th:href="@{/profile/questions(page=1)}">
@@ -80,7 +130,7 @@
                 </a>
                 <a th:href="@{/profile/replies}"
                    th:class="${this=='replies'}? 'active list-group-item':'list-group-item'">
-                    最新回复<span class="badge">14</span>
+                    最新回复<span class="badge" th:text="${session.unreadMessage}"></span>
                 </a>
             </div>
         </div>

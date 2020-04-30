@@ -9,6 +9,7 @@ spring:
     #thymeleaf关闭缓存
     cache: false
   #数据库连接
+  #h2
   datasource:
     url: jdbc:h2:D:\Works\Practice\Java\Web Project\Spring boot\community\db\community
     username: sa

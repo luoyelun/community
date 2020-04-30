@@ -9,6 +9,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
     <link rel="stylesheet" th:href="@{/css/community.css}">
     <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/community.js}"></script>
 </head>
 <body>
 <!--导航栏-->
@@ -32,11 +33,32 @@
                     <textarea th:text="${description}" rows="15" class="form-control" name="description"
                               id="description" required></textarea>
                 </div>
-
+                <!--标签-->
                 <div class="form-group">
                     <label for="tag">添加标签</label>
-                    <input th:value="${tag}" class="form-control" name="tag" id="tag" placeholder="多个标签以，分隔"
-                           autocomplete="off" required>
+                    <input th:value="${tag}" class="form-control" name="tag" id="tag" placeholder="点击选择标签"
+                           autocomplete="off" onclick="showSelectTag()" required>
+                    <div id="select-tag" class="publish-tag-tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:each="selectCategory:${tags}">
+                                <a th:href="@{'#'+${selectCategory.categoryName}}" aria-controls="home" role="tab"
+                                   data-toggle="tab"
+                                   th:text="${selectCategory.categoryName}"></a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" th:id="${selectCategory.categoryName}"
+                                 th:each="selectCategory:${tags}">
+                                <span th:each="selectTag:${selectCategory.tags}">
+                                    <span class="comment-tag" onclick="selectTag(this)"
+                                          th:data-tag="${selectTag}" th:text="${selectTag}">
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <span th:if="${error!=null}" th:text="${error}" style="color: red"></span>
                 <button type="submit" class="btn btn-success pull-right btn-publish">发布问题</button>

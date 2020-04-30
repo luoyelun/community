@@ -1,5 +1,5 @@
 body {
-    background-color: #F6F5F0;
+    background-color: #eee;
 }
 
 .main {
@@ -13,6 +13,7 @@ body {
 }
 
 .main-content {
+    padding-left: 20px;
     border-right: 1px solid #e6e6e6;
 }
 
@@ -36,8 +37,33 @@ body {
     color: #0f0f0f;
 }
 
-.profile .section {
+.section {
     margin-top: 20px;
+}
+
+.publish-tag-tab {
+    display: none;
+    margin-top: 5px;
+    padding-top: 10px;
+}
+
+.publish-tag-tab .label-info {
+    margin-right: 10px;
+    white-space: normal;
+}
+
+.comment-tag {
+    text-decoration-line: none;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    line-height: 16px;
+    padding: 2px 5px;
+    background-color: #99cfff;
+    font-size: 12px;
+    color: #fff !important;
+    border-radius: 4px;
+    margin: 4px;
 }
 
 .community-menu {
@@ -45,6 +71,50 @@ body {
     font-size: 12px;
 }
 
+.question-tag {
+    margin-right: 5px;
+}
+
 .error-page-bg {
     background-color: #eee;
 }
+
+.comment-publisher {
+    vertical-align: middle;
+}
+
+.comment {
+    margin: 10px 0;
+}
+
+.comment-list {
+    border-right: grey 1px solid;
+}
+
+.sub-comment {
+    border-radius: 5px;
+    border: 1px solid rgb(238, 238, 238);
+    padding: 0;
+}
+
+.sub-comment-margin {
+    padding-bottom: 5px;
+    padding-top: 10px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.menu {
+    color: #999;
+    margin-top: 5px;
+}
+
+.menu .icon {
+    font-size: 15px;
+    margin-right: 6px;
+}
+
+.menu .icon:hover {
+    color: #0099CC;
+}
+

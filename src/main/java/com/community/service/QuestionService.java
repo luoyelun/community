@@ -15,8 +15,12 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author luoyelun
@@ -38,7 +42,9 @@ public class QuestionService {
         //分页
         PageHelper.startPage(pageNum, 10);
         //获得分页信息、相应条数的question
-        PageInfo<Question> questions = new PageInfo<>(questionMapper.selectByExample(new QuestionExample()), 5);
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("GMT_CREATE desc");
+        PageInfo<Question> questions = new PageInfo<>(questionMapper.selectByExample(questionExample), 5);
         PageInfo<QuestionDTO> pageInfo = new PageInfo<>();
         BeanUtils.copyProperties(questions, pageInfo);
         pageInfo.setList(new ArrayList<QuestionDTO>());
@@ -47,7 +53,6 @@ public class QuestionService {
             User user = findByAccountId(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
-
             questionDTO.setUser(user);
             pageInfo.getList().add(questionDTO);
         }
@@ -57,12 +62,12 @@ public class QuestionService {
     /**
      * 查找我的问题，通过当前用户id
      */
-    public PageInfo<QuestionDTO> list(Integer pageNum, long id) {
-        PageHelper.startPage(pageNum, 5);
+    public PageInfo<QuestionDTO> list(Integer pageNum, long accountId) {
+        PageHelper.startPage(pageNum, 10);
         //获得该用户发布的问题
         QuestionExample example = new QuestionExample();
         example.createCriteria().
-                andCreatorEqualTo(id);
+                andCreatorEqualTo(accountId);
         PageInfo<Question> questions = new PageInfo<>(questionMapper.selectByExample(example), 5);
         PageInfo<QuestionDTO> pageInfo = new PageInfo<>();
         BeanUtils.copyProperties(questions, pageInfo);
@@ -90,7 +95,7 @@ public class QuestionService {
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
 
-        questionDTO.setUser(findByAccountId(question.getCreator()));
+        questionDTO.setUser(findByAccountId(question.getCreator().longValue()));
         return questionDTO;
     }
 
@@ -109,7 +114,7 @@ public class QuestionService {
             questionMapper.insertSelective(question);
         } else {
             question.setGmtModify(System.currentTimeMillis());
-            int updated = questionMapper.updateByPrimaryKey(question);
+            int updated = questionMapper.updateByPrimaryKeySelective(question);
             if (updated == 0) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
@@ -124,5 +129,33 @@ public class QuestionService {
         example.createCriteria()
                 .andAccountIdEqualTo(creator);
         return userMapper.selectByExample(example).get(0);
+    }
+
+    public void deleteQuestion(Integer id) {
+        questionMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<QuestionDTO> selectRelated(QuestionDTO queryDTO) {
+        if (StringUtils.isEmpty(queryDTO.getTag())) {
+            return new ArrayList<>();
+        }
+        String replace = StringUtils.replace(queryDTO.getTag(), ",", "|");
+//        String[] tags = StringUtils.split(queryDTO.getTag(), ",");
+//        String regexpTag = Arrays
+//                .stream(tags)
+//                .filter(StringUtils::isEmpty)
+//                .map(t -> t.replace("+", "").replace("*", "").replace("?", ""))
+//                .filter(StringUtils::isEmpty)
+//                .collect(Collectors.joining("|"));
+        Question question = new Question();
+        question.setId(queryDTO.getId());
+        question.setTag(replace);
+        List<Question> questions = questionExtMapper.selectRelated(question);
+        List<QuestionDTO> questionDTOS = questions.stream().map(q -> {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(q, questionDTO);
+            return questionDTO;
+        }).collect(Collectors.toList());
+        return questionDTOS;
     }
 }

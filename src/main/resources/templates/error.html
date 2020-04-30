@@ -14,7 +14,7 @@
 <!--导航栏-->
 <div th:replace="~{navigation::navbar}"></div>
 <!--内容列表-->
-<div class="jumbotron">
+<div class="jumbotron" style="margin-left: 20px;">
     <h1>出错了。。。</h1>
     <p th:text="${message}">服务太热了，要不然稍等再来试试</p>
     <p><a class="btn btn-primary btn-lg" th:href="@{/}" role="button">返回主页</a></p>
