@@ -85,5 +85,5 @@ logging:
   file:
     name: log/community.log
   level:
-    root: debug
+    root: info
     com.community.mapper: debug
