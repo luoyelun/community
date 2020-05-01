@@ -8,8 +8,13 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
     <link rel="stylesheet" th:href="@{/css/community.css}">
+    <link rel="stylesheet" th:href="@{/css/editormd.preview.min.css}">
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/community.js}"></script>
+    <script th:src="@{/js/editormd.min.js}"></script>
+    <script th:src="@{/js/lib/marked.min.js}"></script>
+    <script th:src="@{/js/lib/prettify.min.js}"></script>
+
 </head>
 <script type="application/javascript">
     window.onload = function () {
@@ -46,7 +51,18 @@
                 <hr>
             </div>
             <!--内容-->
-            <div th:text="${question.description}"></div>
+            <div id="question-view">
+                <label>
+                    <textarea style="display:none;" th:text="${question.description}">
+
+                    </textarea>
+                </label>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    editormd.markdownToHTML("question-view", {});
+                });
+            </script>
             <hr>
             <!--标签-->
             <div class="">
