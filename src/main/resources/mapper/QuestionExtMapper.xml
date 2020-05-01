@@ -48,4 +48,10 @@
         order by gmt_create desc limit 20
 
     </select>
+    <select id="search" resultType="com.community.model.Question">
+        select *
+        from question
+        where TITLE LIKE concat('%', #{search}, '%')
+        order by GMT_CREATE desc
+    </select>
 </mapper>

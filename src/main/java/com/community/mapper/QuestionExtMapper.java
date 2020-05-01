@@ -14,4 +14,6 @@ public interface QuestionExtMapper {
     void updateCommentCount(Question record);
 
     List<Question> selectRelated(Question question);
+
+    List<Question> search(@Param("search") String search);
 }

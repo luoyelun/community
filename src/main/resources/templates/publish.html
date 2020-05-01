@@ -18,10 +18,11 @@
 <!--导航栏-->
 <div th:replace="~{navigation::navbar}"></div>
 <!--发起页内容-->
-<div class="container-fluid main">
+<div class="container-fluid">
     <div class="row">
+        <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12"></div>
         <!--发起内容输入-->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 main-content">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 main-content main">
             <h2><span class="glyphicon glyphicon-plus"></span> 发起</h2>
             <hr>
             <form th:action="@{/publish}" method="post">
@@ -40,11 +41,14 @@
                     $(function () {
                         editormd("question-editor", {
                             width: "100%",
-                            height: 500,
+                            height: 400,
                             path: "/community/js/lib/",
                             delay: 0,
                             watch: false,
                             placeholder: "请输入问题描述",
+                            imageUpload: true,
+                            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                            imageUploadURL: "/community/file/upload",
                         });
                     });
                 </script>
@@ -90,6 +94,6 @@
         </div>
     </div>
 </div>
-
+<div th:replace="~{footer::foot}"></div>
 </body>
 </html>

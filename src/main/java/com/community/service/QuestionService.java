@@ -12,13 +12,12 @@ import com.community.model.User;
 import com.community.model.UserExample;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,13 +37,20 @@ public class QuestionService {
     /**
      * 首页问题列表
      */
-    public PageInfo<QuestionDTO> pageList(int pageNum) {
+    public PageInfo<QuestionDTO> pageList(int pageNum, String search) {
         //分页
         PageHelper.startPage(pageNum, 10);
         //获得分页信息、相应条数的question
-        QuestionExample questionExample = new QuestionExample();
-        questionExample.setOrderByClause("GMT_CREATE desc");
-        PageInfo<Question> questions = new PageInfo<>(questionMapper.selectByExample(questionExample), 5);
+        PageInfo<Question> questions;
+        //查找所有
+        if (StringUtils.isEmpty(search)) {
+            QuestionExample questionExample = new QuestionExample();
+            questionExample.setOrderByClause("GMT_CREATE desc");
+            questions = new PageInfo<>(questionMapper.selectByExample(questionExample), 5);
+        } else {
+            //根据关键词查找
+            questions = new PageInfo<>(questionExtMapper.search(search));
+        }
         PageInfo<QuestionDTO> pageInfo = new PageInfo<>();
         BeanUtils.copyProperties(questions, pageInfo);
         pageInfo.setList(new ArrayList<QuestionDTO>());

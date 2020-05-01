@@ -41,12 +41,6 @@
             <version>1.2.68</version>
         </dependency>
 
-        <!--h2数据库引擎-->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.200</version>
-        </dependency>
         <!--mysql驱动-->
         <dependency>
             <groupId>mysql</groupId>
@@ -82,12 +76,6 @@
             <artifactId>qiniu-java-sdk</artifactId>
             <version>7.2.28</version>
         </dependency>
-        <!--flyway-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.flywaydb</groupId>-->
-        <!--            <artifactId>flyway-core</artifactId>-->
-        <!--            <version>6.4.0</version>-->
-        <!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -111,16 +99,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!--            <plugin>-->
-            <!--                <groupId>org.flywaydb</groupId>-->
-            <!--                <artifactId>flyway-maven-plugin</artifactId>-->
-            <!--                <version>6.4.0</version>-->
-            <!--                <configuration>-->
-            <!--                    <url>jdbc:h2:D:\Works\Practice\Java\Web Project\Spring boot\community\db\community</url>-->
-            <!--                    <user>sa</user>-->
-            <!--                    <password>123</password>-->
-            <!--                </configuration>-->
-            <!--            </plugin>-->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>

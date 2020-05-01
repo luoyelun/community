@@ -14,9 +14,10 @@
 <!--导航栏-->
 <div th:replace="~{navigation::navbar}"></div>
 <!--内容列表-->
-<div class="container-fluid main">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 main-content">
+        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12"></div>
+        <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12 main-content main">
             <h2 th:text="${section}"></h2>
             <hr>
             <th:block th:if="${pageList!=null and section.equals('我的提问')}">
@@ -136,6 +137,6 @@
         </div>
     </div>
 </div>
-
+<div th:replace="~{footer::foot}"></div>
 </body>
 </html>

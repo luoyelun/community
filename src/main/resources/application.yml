@@ -4,7 +4,18 @@ github:
     secret: 49cdadb9bca561c9bf315976579f722a319de898
   redirect:
     uri: http://localhost:8081/community/callback
+qiniu:
+  oss:
+    accessKey: 2Ib66pCbhytfZreY7HuafdZ1ULyGRjofo5PL7NjX
+    secretKey: _q_VYTjpntTVXRuVUePKxK7DuOQcC5M_9U_rKnlV
+    bucket: acommunity
 spring:
+  servlet:
+    multipart:
+      #单个文件的最大限制
+      max-file-size: 100MB
+      #单次上传文件的最大限制
+      max-request-size: 1000MB
   thymeleaf:
     #thymeleaf关闭缓存
     cache: false
@@ -56,14 +67,23 @@ server:
   port: 8081
   servlet:
     context-path: /community
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.community.model
   mapper-locations: classpath:mapper/*.xml
+
+
 pagehelper:
   helper-dialect: h2 #数据库方言
   reasonable: true #分页合理化
   support-methods-arguments: true #是否支持接口参数来传递分页参数，默认false
   page-size-zero: false #当设置为true的时候，如果pagesize设置为0（或RowBounds的limit=0），就不执行分页，返回全部结果
+logging:
+  file:
+    name: log/community.log
+  level:
+    root: debug
+    com.community.mapper: debug

@@ -1,7 +1,6 @@
 package com.community.provider;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.support.spring.FastJsonJsonView;
 import com.community.dto.AccessTokenDTO;
 import com.community.dto.GithubUser;
 import okhttp3.*;

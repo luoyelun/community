@@ -24,9 +24,10 @@
 <!--导航栏-->
 <div th:replace="~{navigation::navbar}"></div>
 <!--内容列表-->
-<div class="container-fluid main">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 main-content">
+        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12"></div>
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 main-content main">
             <h2><span class="glyphicon glyphicon glyphicon-list"></span> 发现</h2>
             <hr>
             <div class="media" th:each="page:${pageList.list}">
@@ -46,24 +47,38 @@
 
             <nav aria-label="..." class="pull-right">
                 <ul class="pagination pagination-color">
-                    <li th:if="${!pageList.isIsFirstPage()}"><a th:href="@{/(page=1)}"><<</a></li>
-                    <li th:if="${!pageList.isIsFirstPage()}"><a th:href="@{/(page=${pageList.prePage})}"><</a></li>
+                    <li th:if="${!pageList.isIsFirstPage()}">
+                        <a th:href="@{/(page=1,serach=${search})}">
+                            <<
+                        </a>
+                    </li>
+                    <li th:if="${!pageList.isIsFirstPage()}">
+                        <a th:href="@{/(page=${pageList.prePage},serach=${search})}">
+                            <
+                        </a>
+                    </li>
                     <th:block th:each="nav:${pageList.navigatepageNums}">
                         <li th:class="${nav==pageList.pageNum}? 'active':''">
-                            <a th:href="@{/(page=${nav})}" th:text="${nav}"></a>
+                            <a th:href="@{/(page=${nav},serach=${search})}" th:text="${nav}"></a>
                         </li>
                     </th:block>
-                    <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.nextPage})}">></a></li>
-                    <li th:if="${!pageList.isIsLastPage()}"><a th:href="@{/(page=${pageList.pages})}">>></a></li>
+                    <li th:if="${!pageList.isIsLastPage()}">
+                        <a th:href="@{/(page=${pageList.nextPage},serach=${search})}">
+                            >
+                        </a>
+                    </li>
+                    <li th:if="${!pageList.isIsLastPage()}">
+                        <a th:href="@{/(page=${pageList.pages},serach=${search})}">
+                            >>
+                        </a>
+                    </li>
                     <!--                    <li><a href="#" th:text="'当前第'+${pageList.pageNum}+'页 共'+${pageList.pages}+'页'"></a></li>-->
                 </ul>
             </nav>
         </div>
-        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3>最新话题</h3>
-        </div>
+        <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12"></div>
     </div>
 </div>
-
+<div th:replace="~{footer::foot}"></div>
 </body>
 </html>

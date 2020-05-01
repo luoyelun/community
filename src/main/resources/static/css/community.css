@@ -1,9 +1,8 @@
 body {
-    background-color: #eee;
+    background-image: url("/community/images/index-bg.png");
 }
 
 .main {
-    margin: 20px;
     background-color: white;
 }
 
@@ -14,7 +13,7 @@ body {
 
 .main-content {
     padding-left: 20px;
-    border-right: 1px solid #e6e6e6;
+    box-shadow: 6px 6px 10px gray;
 }
 
 .main-avatar {
@@ -118,3 +117,7 @@ body {
     color: #0099CC;
 }
 
+.footer {
+    padding: 10px 25%;
+    color: #666666;
+}
